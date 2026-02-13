@@ -93,7 +93,8 @@ dataset/sudoku.csv
 
 Le fichier est ignoré par Git via `.gitignore`.
 
-#Statistiques de parties
+#  Statistiques du joueur
+
 
 Les statistiques sont stockées dans un fichier local :
 
