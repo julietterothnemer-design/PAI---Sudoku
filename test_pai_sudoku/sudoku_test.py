@@ -233,6 +233,8 @@ def test_load_puzzles_returns_list():
     """
     project_root = Path(__file__).resolve().parents[1]
     csv_path = project_root / "dataset" / "sudoku.csv"
+    if not csv_path.exists():
+        pytest.skip("dataset/sudoku.csv not present (not tracked in git)")
 
     puzzles = load_puzzles(str(csv_path), limit=10)
     assert isinstance(puzzles, list)
@@ -242,6 +244,8 @@ def test_load_puzzles_returns_list():
 def test_loaded_puzzles_have_required_keys():
     project_root = Path(__file__).resolve().parents[1]
     csv_path = project_root / "dataset" / "sudoku.csv"
+    if not csv_path.exists():
+        pytest.skip("dataset/sudoku.csv not present (not tracked in git)")
 
     puzzles = load_puzzles(str(csv_path), limit=5)
     required = {"puzzle", "solution", "difficulty"}
@@ -251,8 +255,10 @@ def test_loaded_puzzles_have_required_keys():
 
 def test_loaded_puzzle_shapes_are_9x9():
     project_root = Path(__file__).resolve().parents[1]
-    csv_path = project_root / "dataset" / "sudoku.csv"
 
+    csv_path = project_root / "dataset" / "sudoku.csv"
+    if not csv_path.exists():
+        pytest.skip("dataset/sudoku.csv not present (not tracked in git)")
     puzzles = load_puzzles(str(csv_path), limit=3)
     for p in puzzles:
         puzzle = p["puzzle"]
