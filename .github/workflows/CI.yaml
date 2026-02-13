@@ -12,8 +12,8 @@ concurrency:
 env:
   FORCE_COLOR: "1"
 
-permissions: {}
-
+permissions:
+  contents: read
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
