@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Wed Nov  17 15:32:10 2025
 
@@ -7,28 +6,28 @@ Created on Wed Nov  17 15:32:10 2025
 
 # src/game.py
 import random
-from pai_sudoku.grid import SudokuGrid
 
+from pai_sudoku.grid import SudokuGrid
 
 
 class SudokuGame:
     def __init__(self, puzzles):
         """
-        puzzles : liste de dico 
+        puzzles : liste de dico
                  chaque dict contient :
                  - 'puzzle' : grille 9x9 (0 = vide)
                  - 'solution' : grille 9x9 solution
                  - 'difficulty' : 'easy'/'medium'/'hard'
         """
         self.puzzles = puzzles
-        self.mode = "immediate"     # "immediate" ou "delayed" mode par défaut
-        self.difficulty = "easy"    # "easy", "medium", "hard" easy par defaut
-        self.grid = None            # instance de SudokuGrid
-        self.errors = 0             # compteur d'erreurs (utile en mode immédiat)
+        self.mode = "immediate"  # "immediate" ou "delayed" mode par défaut
+        self.difficulty = "easy"  # "easy", "medium", "hard" easy par defaut
+        self.grid = None  # instance de SudokuGrid
+        self.errors = 0  # compteur d'erreurs (utile en mode immédiat)
 
-    def start_new_game(self, difficulty, mode): # lance nouvelle partie :
-                                                # - choisit une grille random de la difficulté demandée
-        self.difficulty = difficulty            # - crée l'objet SudokuGrid correspondant
+    def start_new_game(self, difficulty, mode):  # lance nouvelle partie :
+        # - choisit une grille random de la difficulté demandée
+        self.difficulty = difficulty  # - crée l'objet SudokuGrid correspondant
         self.mode = mode
         self.errors = 0
 

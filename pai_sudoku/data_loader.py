@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Sat Jan 10 18:34:29 2026
 
@@ -30,11 +29,13 @@ def load_raw_puzzles(csv_path: str, limit: int | None = 5000) -> list[dict]:
     for _, row in df.iterrows():
         pz = str(row["quizzes"])
         sol = str(row["solutions"])
-        raw.append({
-            "puzzle": string81_to_grid(pz),
-            "solution": string81_to_grid(sol),
-            "zeros": pz.count("0"),
-        })
+        raw.append(
+            {
+                "puzzle": string81_to_grid(pz),
+                "solution": string81_to_grid(sol),
+                "zeros": pz.count("0"),
+            }
+        )
     return raw
 
 
@@ -59,11 +60,13 @@ def assign_difficulty_terciles(raw: list[dict]) -> list[dict]:
         else:
             diff = "hard"
 
-        puzzles.append({
-            "puzzle": item["puzzle"],
-            "solution": item["solution"],
-            "difficulty": diff,
-        })
+        puzzles.append(
+            {
+                "puzzle": item["puzzle"],
+                "solution": item["solution"],
+                "difficulty": diff,
+            }
+        )
     return puzzles
 
 

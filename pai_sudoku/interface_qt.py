@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Sat Jan 10 18:35:09 2026
 
@@ -7,16 +6,25 @@ Created on Sat Jan 10 18:35:09 2026
 
 # ui/interface_qt.py
 import sys
+
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
-    QApplication, QMainWindow, QWidget,
-    QGridLayout, QVBoxLayout, QHBoxLayout,
-    QPushButton, QLabel, QMessageBox, QComboBox
+    QApplication,
+    QComboBox,
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QMessageBox,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
 )
 
 
 class CellButton(QPushButton):
     """Bouton représentant une cellule (row, col) du Sudoku."""
+
     def __init__(self, row: int, col: int):
         super().__init__("")
         self.row = row
@@ -100,12 +108,14 @@ class SudokuWindow(QMainWindow):
         for r in range(9):
             for c in range(9):
                 btn = self.cells[r][c]
-                btn.clicked.connect(lambda checked=False, rr=r, cc=c: self.select_cell(rr, cc))
+                btn.clicked.connect(
+                    lambda checked=False, rr=r, cc=c: self.select_cell(rr, cc)
+                )
                 self.grid_layout.addWidget(btn, r, c)
 
         self.new_game()
 
-    # Actions 
+    # Actions
     def new_game(self):
         diff = self.diff_combo.currentText()
         mode = self.mode_combo.currentText()
@@ -113,16 +123,15 @@ class SudokuWindow(QMainWindow):
         self.selected = None
         self.info.setText(f"Nouvelle grille : {diff} / {mode}")
         self.refresh()
-        
+
     def on_mode_changed(self, new_mode: str):
         # change le mode sans recharger de grille
         self.game.mode = new_mode
         self.info.setText(f"Mode changé : {new_mode}")
 
-
     def select_cell(self, r: int, c: int):
         self.selected = (r, c)
-        self.info.setText(f"Case sélectionnée : ligne {r+1}, colonne {c+1}")
+        self.info.setText(f"Case sélectionnée : ligne {r + 1}, colonne {c + 1}")
         self.refresh()
 
     def place_number(self, value: int):
@@ -157,7 +166,7 @@ class SudokuWindow(QMainWindow):
         text = "\n".join(" ".join(str(x) for x in row) for row in sol)
         QMessageBox.information(self, "Solution", text)
 
-    # Affichage 
+    # Affichage
     def refresh(self):
         g = self.game.grid.player_grid
         init = self.game.grid.initial_grid
@@ -180,11 +189,11 @@ class SudokuWindow(QMainWindow):
                 bottom = 3 if r == 8 else 1
 
                 border_style = (
-                f"border-top: {top}px solid black;"
-                f"border-left: {left}px solid black;"
-                f"border-right: {right}px solid black;"
-                f"border-bottom: {bottom}px solid black;"
-            )
+                    f"border-top: {top}px solid black;"
+                    f"border-left: {left}px solid black;"
+                    f"border-right: {right}px solid black;"
+                    f"border-bottom: {bottom}px solid black;"
+                )
 
                 style = border_style + "font-size: 16px;"
 
@@ -192,7 +201,6 @@ class SudokuWindow(QMainWindow):
                     style += "background-color: #d0e8ff;"
 
                 btn.setStyleSheet(style)
-
 
 
 def run_qt_app(game):
@@ -204,4 +212,3 @@ def run_qt_app(game):
     win = SudokuWindow(game)
     win.show()
     app.exec()
-

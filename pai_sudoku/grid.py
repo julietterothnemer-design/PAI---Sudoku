@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Wed Nov  7 15:32:10 2025
 
@@ -7,25 +6,24 @@ Created on Wed Nov  7 15:32:10 2025
 
 # classe rpz une grille de Sudoku
 
+
 class SudokuGrid:
     def __init__(self, initial_grid, solution):
         """
         initial_grid : liste 9x9 contenant grille de départ (0 = case vide)
         solution     : liste 9x9 contenant solution complète
         """
-        self.initial_grid = initial_grid # Grille de départ 
+        self.initial_grid = initial_grid  # Grille de départ
 
-        self.solution = solution # solution  complete
+        self.solution = solution  # solution  complete
 
         # grille que le joueur va remplir
         # copie pour pas modif grille initiale
         self.player_grid = [row[:] for row in initial_grid]
 
     def fill_cell(self, row, col, value):
-    
         if self.initial_grid[row][col] == 0:
             self.player_grid[row][col] = value
-
 
     def erase_cell(self, row, col):
         """
