@@ -6,8 +6,10 @@ Created on Wed Nov  17 15:32:10 2025
 
 # src/game.py
 import random
+import time
 
 from pai_sudoku.grid import SudokuGrid
+from pai_sudoku.stats_db import StatsDB
 
 
 class SudokuGame:
@@ -24,6 +26,9 @@ class SudokuGame:
         self.difficulty = "easy"  # "easy", "medium", "hard" easy par defaut
         self.grid = None  # instance de SudokuGrid
         self.errors = 0  # compteur d'erreurs (utile en mode immédiat)
+        self._start_time = None
+        self._solved_recorded = False
+        self.stats = StatsDB()
 
     def start_new_game(self, difficulty, mode):  # lance nouvelle partie :
         # - choisit une grille random de la difficulté demandée
@@ -37,6 +42,9 @@ class SudokuGame:
 
         chosen = random.choice(possible)
         self.grid = SudokuGrid(chosen["puzzle"], chosen["solution"])
+
+        self._start_time = time.perf_counter()
+        self._solved_recorded = False
 
     def play_move(self, row, col, value):
         """
@@ -65,6 +73,27 @@ class SudokuGame:
         """Affiche la solution complète"""
         self.grid.show_solution()
 
+    def elapsed_time_sec(self) -> float:
+        """Temps écoulé depuis le début de la grille actuelle (en secondes)."""
+        if self._start_time is None:
+            return 0.0
+        return time.perf_counter() - self._start_time
+
     def is_finished(self):
-        """Vérifie si la grille est entièrement correcte"""
-        return self.grid.is_completed()
+        """Vérifie si la grille est entièrement correcte.
+        Si oui, enregistre les stats (une seule fois par grille).
+        """
+        finished = self.grid.is_completed()
+        if finished and not self._solved_recorded and self._start_time is not None:
+            duration = time.perf_counter() - self._start_time
+            self.stats.record_solved(self.difficulty, self.mode, duration)
+            self._solved_recorded = True
+        return finished
+
+    def get_stats_summary(self):
+        """Retourne un résumé global des stats."""
+        return self.stats.summary()
+
+    def reset_stats(self) -> None:
+        """Erase all stored stats in DB."""
+        self.stats.reset()

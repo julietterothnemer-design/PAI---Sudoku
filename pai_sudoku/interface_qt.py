@@ -7,7 +7,7 @@ Created on Sat Jan 10 18:35:09 2026
 # ui/interface_qt.py
 import sys
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
@@ -62,6 +62,30 @@ class SudokuWindow(QMainWindow):
 
         self.info = QLabel("Clique une case, puis clique un chiffre.")
         right.addWidget(self.info)
+
+        # --- Stats (UI) ---
+        self.label_elapsed = QLabel("Temps en cours : 0s")
+        self.label_total = QLabel("Temps total : 0s")
+        self.label_solved = QLabel("Grilles résolues : 0")
+        self.label_avg = QLabel("Temps moyen : 0s")
+
+        right.addWidget(self.label_elapsed)
+        right.addWidget(self.label_total)
+        right.addWidget(self.label_solved)
+        right.addWidget(self.label_avg)
+
+        self.btn_refresh_stats = QPushButton("Rafraîchir stats")
+        self.btn_refresh_stats.clicked.connect(self.refresh_stats)
+        right.addWidget(self.btn_refresh_stats)
+
+        self.btn_reset_stats = QPushButton("Reset stats")
+        self.btn_reset_stats.clicked.connect(self.reset_stats_clicked)
+        right.addWidget(self.btn_reset_stats)
+
+        # Timer pour mettre à jour le chrono
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.refresh_elapsed)
+        self.timer.start(1000)  # 1 seconde
 
         right.addWidget(QLabel("Difficulté"))
         self.diff_combo = QComboBox()
@@ -123,6 +147,7 @@ class SudokuWindow(QMainWindow):
         self.selected = None
         self.info.setText(f"Nouvelle grille : {diff} / {mode}")
         self.refresh()
+        self.refresh_stats()
 
     def on_mode_changed(self, new_mode: str):
         # change le mode sans recharger de grille
@@ -151,6 +176,7 @@ class SudokuWindow(QMainWindow):
         self.refresh()
 
         if self.game.is_finished():
+            self.refresh_stats()
             QMessageBox.information(self, "Bravo", "Sudoku terminé !")
 
     def erase_cell(self):
@@ -201,6 +227,34 @@ class SudokuWindow(QMainWindow):
                     style += "background-color: #d0e8ff;"
 
                 btn.setStyleSheet(style)
+
+    def refresh_elapsed(self):
+        """Met à jour le temps en cours."""
+        sec = int(self.game.elapsed_time_sec())
+        self.label_elapsed.setText(f"Temps en cours : {sec}s")
+
+    def refresh_stats(self):
+        """Recharge les stats stockées en base."""
+        summary = self.game.get_stats_summary()
+        total = int(summary.total_time_sec)
+        solved = int(summary.solved_count)
+        avg = int(summary.avg_time_sec)
+
+        self.label_total.setText(f"Temps total : {total}s")
+        self.label_solved.setText(f"Grilles résolues : {solved}")
+        self.label_avg.setText(f"Temps moyen : {avg}s")
+
+    def reset_stats_clicked(self):
+        """Réinitialise la base de stats."""
+        reply = QMessageBox.question(
+            self,
+            "Reset stats",
+            "Supprimer toutes les statistiques enregistrées ?",
+            QMessageBox.Yes | QMessageBox.No,
+        )
+        if reply == QMessageBox.Yes:
+            self.game.reset_stats()
+            self.refresh_stats()
 
 
 def run_qt_app(game):
