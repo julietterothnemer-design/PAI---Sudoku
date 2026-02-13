@@ -62,24 +62,29 @@ La logique métier (`grid.py`, `game.py`) est indépendante de l’interface gra
 
 ---
 
-## Base de données – sudoku.csv
 
-Le projet utilise le dataset Kaggle :
+#  Dataset sudoku.csv
 
-**Sudoku Dataset – Bryan Park**  
-https://www.kaggle.com/datasets/bryanpark/sudoku
+Le fichier `sudoku.csv` n’est pas inclus dans le dépôt (taille > 100MB).
 
-Le fichier `sudoku.csv` n’est **pas inclus dans le dépôt** (taille > 100MB).
+Pour l’utiliser :
 
-###  Installation du dataset
+1. Télécharger le dataset depuis :
+   https://www.kaggle.com/datasets/bryanpark/sudoku
 
-1. Télécharger `sudoku.csv` depuis Kaggle
-2. Créer un dossier à la racine du projet : dataset/
-3. Placer le fichier : dataset/sudoku.csv
+2. Créer un dossier à la racine du projet :
 
-⚠️ Le fichier est ignoré par Git (`.gitignore`) pour éviter les problèmes de taille.
+```
+dataset/
+```
 
----
+3. Placer le fichier :
+
+```
+dataset/sudoku.csv
+```
+
+Le fichier est ignoré par Git via `.gitignore`.
 
 ##  Gestion de la difficulté
 
@@ -95,9 +100,9 @@ Une heuristique simple est utilisée :
 Ce système peut être amélioré ultérieurement.
 ---
 
-# 🚀 Installation et utilisation
+#  Installation et utilisation
 
-## 🔹 Prérequis
+## Prérequis
 
 - Python ≥ 3.10
 - `uv` installé  
@@ -111,7 +116,7 @@ uv --version
 
 ---
 
-## 🔹 Installation des dépendances
+##  Installation des dépendances
 
 Depuis la racine du projet :
 
@@ -136,7 +141,7 @@ Les vérifications de qualité seront automatiquement exécutées avant chaque c
 
 ---
 
-# ▶️ Lancer le jeu
+#  Lancer le jeu
 
 ```bash
 uv run main_qt
@@ -146,7 +151,7 @@ L’interface graphique Qt s’ouvre et le jeu démarre.
 
 ---
 
-# 🧪 Lancer les tests
+#  Lancer les tests
 
 ```bash
 uv run pytest -q
@@ -164,31 +169,6 @@ Les tests couvrent :
 ```bash
 uv run pre-commit run --all-files
 ```
-
----
-
-#  Dataset sudoku.csv
-
-Le fichier `sudoku.csv` n’est pas inclus dans le dépôt (taille > 100MB).
-
-Pour l’utiliser :
-
-1. Télécharger le dataset depuis :
-   https://www.kaggle.com/datasets/bryanpark/sudoku
-
-2. Créer un dossier à la racine du projet :
-
-```
-dataset/
-```
-
-3. Placer le fichier :
-
-```
-dataset/sudoku.csv
-```
-
-Le fichier est ignoré par Git via `.gitignore`.
 
 ---
 
