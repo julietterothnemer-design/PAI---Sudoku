@@ -34,7 +34,14 @@ Ce projet consiste à développer un **jeu de Sudoku interactif en Python**, en 
   - pavé numérique (1 à 9)
   - bouton pour effacer une case
   - bouton « Voir la solution »
-- Détection automatique de fin de partie correcte
+  - Affichage du temps en cours (chrono live)
+  - Enregistrement automatique des parties terminées
+  - Statistiques globales :
+    - Temps total de jeu
+    - Nombre total de grilles résolues
+    - Temps moyen par grille
+  - Bouton Reset stats pour réinitialiser les données
+  - Détection automatique de fin de partie correcte
 
 ---
 
@@ -86,6 +93,16 @@ dataset/sudoku.csv
 
 Le fichier est ignoré par Git via `.gitignore`.
 
+#Statistiques de parties
+
+Les statistiques sont stockées dans un fichier local :
+
+```
+stats.sqlite
+```
+
+Ce fichier est ignoré par Git (`.gitignore`) et n’est pas versionné.
+
 ##  Gestion de la difficulté
 
 Le dataset ne fournit pas directement de difficulté.
@@ -97,8 +114,7 @@ Une heuristique simple est utilisée :
   - `medium`
   - `hard`
 
-Ce système peut être amélioré ultérieurement.
----
+
 
 #  Installation et utilisation
 
@@ -161,6 +177,7 @@ Les tests couvrent :
 - la logique de la grille (`SudokuGrid`)
 - la logique du jeu (`SudokuGame`)
 - le chargement des données
+- le fonctionnement des enregistrements des données statistiques
 
 ---
 
