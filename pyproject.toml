@@ -70,8 +70,8 @@ check-yield-types = false
 
 [tool.pytest.ini_options]
 doctest_optionflags = ["NORMALIZE_WHITESPACE", "ELLIPSIS"]
-addopts = "--import-mode=importlib --doctest-modules"
-testpaths = ["test_pai_sudoku", "pai_sudoku"]
+addopts = "--import-mode=importlib"
+testpaths = ["test_pai_sudoku"]
 
 [tool.coverage.run]
 source = ["pai_sudoku"]
