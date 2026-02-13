@@ -105,7 +105,7 @@ Ce système peut être amélioré ultérieurement.
 ## Prérequis
 
 - Python ≥ 3.10
-- `uv` installé  
+- `uv` installé
   https://docs.astral.sh/uv/
 
 Vérifier l’installation :
@@ -181,6 +181,3 @@ uv run pre-commit run --all-files
 - exécution des tests avec `pytest`
 
 La validation du projet correspond à une CI verte.
-
-
-
