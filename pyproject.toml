@@ -1,0 +1,77 @@
+[project]
+name = "PAI_sudoku"
+version = "0.1.0"
+description = ""
+
+authors = [
+    { name = "Juliette Rothnemer"},
+    { name = " Yvan Glory"},
+    
+]
+requires-python = ">=3.10, <3.14"
+readme = "README.md"
+dependencies = [
+    "pandas[parquet]>=2,<3",
+    "nicegui[native]>=2,<3",
+    "pyside6"
+]
+
+
+[project.scripts]
+main_ng = "pai_sudoku.main_nicegui:run"
+main_qt = "pai_sudoku.main_qt:run"
+
+[dependency-groups]
+test = [
+    "pytest",
+    "coverage",
+    "pandas-stubs",
+    "pytest-sugar",
+]
+docs = [
+    "Sphinx",
+    "pydata-sphinx-theme",
+    "myst-parser",
+    "jupyter",
+    "nbsphinx",
+    "sphinx-copybutton",
+    "sphinx-autobuild",
+    "ipython",
+    "sphinx-favicon",
+    "sphinx-argparse",
+]
+dev = [
+    "pre-commit>=4.5.1",
+]
+
+[tool.uv]
+default-groups = [
+    "test",
+    "docs",
+]
+
+[tool.hatch.build.targets.sdist]
+include = ["pai_sudoku"]
+
+[tool.hatch.build.targets.wheel]
+include = ["pai_sudoku"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pydoclint]
+style = 'google'
+arg-type-hints-in-docstring = false
+skip-checking-raises = true
+allow-init-docstring = true
+check-return-types = false
+check-yield-types = false
+
+[tool.pytest.ini_options]
+doctest_optionflags = ["NORMALIZE_WHITESPACE", "ELLIPSIS"]
+addopts = "--import-mode=importlib --doctest-modules"
+testpaths = ["test_pai_sudoku", "pai_sudoku"]
+
+[tool.coverage.run]
+source = ["pai_sudoku"]
